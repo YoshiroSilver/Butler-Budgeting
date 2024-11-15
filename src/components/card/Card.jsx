@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { IoPencilSharp, IoTrashSharp } from "react-icons/io5";
 import EditCard from "./EditCard";
 
-function Card({ item, handleDelete, handleEdit }) {
+function Card({ item, handleDelete, handleUpdate }) {
     return (
         <div className="m-2 h-fit rounded-xl bg-foreground dark:bg-dark-foreground">
             <h1 className="m-2 text-xl font-extrabold text-copy dark:text-dark-copy">
@@ -36,7 +36,11 @@ function Card({ item, handleDelete, handleEdit }) {
                         ),
                     )}
                     <div className="flex flex-col justify-start">
-                        <EditCard item={item} />
+                        <EditCard
+                            item={item}
+                            title="Edit"
+                            handleUpdate={handleUpdate}
+                        />
                         <IoTrashSharp
                             className="mx-2 my-1 size-6 text-error"
                             onClick={() => handleDelete(item.id)}

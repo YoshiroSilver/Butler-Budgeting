@@ -1,24 +1,44 @@
 import React, { Fragment, useState } from "react";
-import { IoPencilSharp } from "react-icons/io5";
+import { IoPencilSharp, IoAddCircleSharp } from "react-icons/io5";
 
-function EditCard({ item }) {
+function EditCard({ item, title, handleUpdate }) {
     const [modal, setModal] = useState(false);
-    const [tempItem, setTempItem] = useState(item);
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        let newItem = { ...item };
+        for (let index = 0; index < e.target.length - 1; index++) {
+            newItem = {
+                ...newItem,
+                [e.target[index].id]: e.target[index].value,
+            };
+        }
+        //console.log(tempItem);
+        //console.log(newItem);
+        handleUpdate(newItem);
+        toggleModal();
+    };
 
     const toggleModal = () => {
         setModal(!modal);
-        console.log(tempItem);
     };
     return (
         <>
-            <IoPencilSharp
-                className="mx-2 my-1 size-6 text-primary-dark dark:text-primary-light"
-                onClick={toggleModal}
-            />
+            {title != "New" ? (
+                <IoPencilSharp
+                    className="mx-2 my-1 size-6 text-primary-dark dark:text-primary-light"
+                    onClick={toggleModal}
+                />
+            ) : (
+                <IoAddCircleSharp
+                    className="mx-2 my-1 size-20 text-primary-dark dark:text-primary-light"
+                    onClick={toggleModal}
+                />
+            )}
 
             {modal && (
                 <div className="fixed inset-0 z-40 flex min-h-full items-center overflow-y-auto overflow-x-hidden transition">
-                    <div className="dark:bg-background/50 bg-dark-background/50 fixed inset-0 h-full w-full cursor-pointer" />
+                    <div className="fixed inset-0 h-full w-full cursor-pointer bg-dark-background/50 dark:bg-background/50" />
 
                     <div className="pointer-events-none relative my-auto w-full cursor-pointer p-4 transition">
                         <div className="pointer-events-auto relative mx-auto w-full max-w-sm cursor-default rounded-xl bg-foreground py-2 dark:bg-dark-foreground">
@@ -50,7 +70,7 @@ function EditCard({ item }) {
                                         className="text-xl font-bold tracking-tight"
                                         id="page-action.heading"
                                     >
-                                        Edit
+                                        {title}
                                     </h2>
                                 </div>
                             </div>
@@ -62,8 +82,13 @@ function EditCard({ item }) {
                                 ></div>
 
                                 <div className="grid grid-cols-1 place-items-center px-4 py-2">
-                                    <form noValidate className="space-y-4">
-                                        {Object.entries(tempItem).map(
+                                    <form
+                                        id="EditCardForm"
+                                        noValidate
+                                        className="space-y-4"
+                                        onSubmit={(e) => handleFormSubmit(e)}
+                                    >
+                                        {Object.entries(item).map(
                                             ([key, value]) => {
                                                 return key === "id" ? (
                                                     <Fragment
@@ -74,7 +99,7 @@ function EditCard({ item }) {
                                                         key={`${key}_${value}`}
                                                     >
                                                         <label
-                                                            htmlFor="Full Name"
+                                                            htmlFor={key}
                                                             className="mb-2 text-lg text-copy-light dark:text-dark-copy-light"
                                                         >
                                                             {key}
@@ -103,6 +128,7 @@ function EditCard({ item }) {
                                 <div className="px-6 py-2">
                                     <div className="grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-2">
                                         <button
+                                            onClick={toggleModal}
                                             type="button"
                                             className="focus:ring-primary-600 focus:text-primary-600 focus:bg-primary-50 focus:border-primary-600 dark:focus:text-primary-400 dark:focus:border-primary-400 inline-flex min-h-[2.25rem] items-center justify-center gap-1 rounded-lg border border-gray-300 bg-white px-4 py-1 text-sm font-medium text-gray-800 outline-none transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-inset focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-gray-500 dark:hover:bg-gray-700 dark:focus:bg-gray-800 dark:focus:ring-offset-0"
                                         >
@@ -110,6 +136,7 @@ function EditCard({ item }) {
                                         </button>
 
                                         <button
+                                            form="EditCardForm"
                                             type="submit"
                                             className="inline-flex min-h-[2.25rem] items-center justify-center gap-1 rounded-lg border border-transparent bg-primary px-4 py-1 text-sm font-medium text-primary-content shadow outline-none transition-colors hover:bg-primary-dark focus:bg-[#11071F] focus:ring-2 focus:ring-inset focus:ring-white focus:ring-offset-2 focus:ring-offset-[#11071F] dark:shadow-gray-400 dark:focus:ring-offset-0"
                                         >
