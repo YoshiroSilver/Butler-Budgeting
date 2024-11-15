@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: 17 31 233;
+    --primary-content: 250 251 255;
+    --primary-dark: 14 25 185;
+    --primary-light: 60 72 241;
+
+    --secondary: 0 0 0;
+    --secondary-content: 128 128 128;
+    --secondary-dark: 0 0 0;
+    --secondary-light: 26 26 26;
+
+    --background: 239 239 241;
+    --foreground: 251 251 251;
+    --border: 221 221 226;
+
+    --copy: 35 36 41;
+    --copy-light: 94 95 110;
+    --copy-lighter: 132 133 149;
+
+    --dark-background: 24 24 27;
+    --dark-foreground: 35 36 41;
+    --dark-border: 59 60 69;
+
+    --dark-copy: 251 251 251;
+    --dark-copy-light: 214 214 220;
+    --dark-copy-lighter: 159 160 172;
+
+    --success: 17 233 17;
+    --warning: 233 233 17;
+    --error: 233 17 17;
+
+    --success-content: 0 0 0;
+    --warning-content: 0 0 0;
+    --error-content: 255 250 250;
+  }
+}
