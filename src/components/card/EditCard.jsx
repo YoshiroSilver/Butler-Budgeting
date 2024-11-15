@@ -5,7 +5,6 @@ function EditCard({ item, title, handleUpdate }) {
     const [modal, setModal] = useState(false);
 
     const handleFormSubmit = (e) => {
-        e.preventDefault();
         let newItem = { ...item };
         for (let index = 0; index < e.target.length - 1; index++) {
             newItem = {
@@ -13,8 +12,15 @@ function EditCard({ item, title, handleUpdate }) {
                 [e.target[index].id]: e.target[index].value,
             };
         }
-        //console.log(tempItem);
-        //console.log(newItem);
+        if (title === "New") {
+            e.preventDefault();
+        }
+        if (JSON.stringify(item) === JSON.stringify(newItem)) {
+            //early exit no need to attempt an update
+            toggleModal();
+            return;
+        }
+        console.log(newItem);
         handleUpdate(newItem);
         toggleModal();
     };

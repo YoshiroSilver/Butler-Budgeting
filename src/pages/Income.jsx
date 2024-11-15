@@ -47,7 +47,8 @@ function Income() {
     const handleUpdate = (item) => {
         if (item.hasOwnProperty("id")) {
             //update item based on id
-            db.update(item, item.id).then(
+            console.log(`Id: ${item.id}`);
+            db.update(item).then(
                 (result) => {
                     console.log(result);
                 },
