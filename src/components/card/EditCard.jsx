@@ -20,7 +20,6 @@ function EditCard({ item, title, handleUpdate }) {
             toggleModal();
             return;
         }
-        console.log(newItem);
         handleUpdate(newItem);
         toggleModal();
     };
@@ -113,13 +112,43 @@ function EditCard({ item, title, handleUpdate }) {
                                                                 *
                                                             </span>
                                                         </label>
-                                                        <input
-                                                            id={key}
-                                                            className="w-full rounded-lg border border-border bg-foreground p-3 text-copy shadow-md duration-300 ease-in-out placeholder:text-base focus:outline-none dark:border-dark-border dark:bg-dark-foreground dark:text-dark-copy dark:shadow-gray-400"
-                                                            type="text"
-                                                            defaultValue={value}
-                                                            required
-                                                        />
+                                                        {key === "Interval" ? (
+                                                            <select
+                                                                defaultValue={
+                                                                    value
+                                                                }
+                                                                id={key}
+                                                                className="w-full rounded-lg border border-border bg-foreground p-3 text-copy shadow-md duration-300 ease-in-out placeholder:text-base focus:outline-none dark:border-dark-border dark:bg-dark-foreground dark:text-dark-copy dark:shadow-gray-400"
+                                                            >
+                                                                <option value="Weekly">
+                                                                    Weekly
+                                                                </option>
+                                                                <option value="Bi-Weekly">
+                                                                    Bi-Weekly
+                                                                </option>
+                                                                <option value="Monthly">
+                                                                    Monthly
+                                                                </option>
+                                                                <option value="Yearly">
+                                                                    Yearly
+                                                                </option>
+                                                            </select>
+                                                        ) : (
+                                                            <input
+                                                                id={key}
+                                                                className="w-full rounded-lg border border-border bg-foreground p-3 text-copy shadow-md duration-300 ease-in-out placeholder:text-base focus:outline-none dark:border-dark-border dark:bg-dark-foreground dark:text-dark-copy dark:shadow-gray-400"
+                                                                type={
+                                                                    key ===
+                                                                    "Date"
+                                                                        ? "date"
+                                                                        : "text"
+                                                                }
+                                                                defaultValue={
+                                                                    value
+                                                                }
+                                                                required
+                                                            />
+                                                        )}
                                                     </div>
                                                 );
                                             },

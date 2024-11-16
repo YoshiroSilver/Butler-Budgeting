@@ -15,21 +15,15 @@ function Card({ item, handleDelete, handleUpdate }) {
                             <Fragment key={key} />
                         ) : (
                             <div
-                                key={`${key}_${value}_div`}
+                                key={`${key}_${value}`}
                                 className="m-2 flex w-fit flex-col rounded-lg border border-border dark:border-dark-border"
                             >
-                                <h2
-                                    key={`${key}_${value}_key`}
-                                    className="px-2 py-1 text-lg font-bold text-copy dark:text-dark-copy"
-                                >
+                                <h2 className="px-2 py-1 text-lg font-bold text-copy dark:text-dark-copy">
                                     {key}
                                 </h2>
-                                <h2
-                                    key={`${key}_${value}_value`}
-                                    className="px-2 py-1 text-right text-lg font-bold text-copy dark:text-dark-copy"
-                                >
-                                    {typeof value === "number"
-                                        ? `$${value.toFixed(2)}`
+                                <h2 className="px-2 py-1 text-right text-lg font-bold text-copy dark:text-dark-copy">
+                                    {key === "Amount" || key === "Total"
+                                        ? `$${Number(value).toFixed(2)}`
                                         : value}
                                 </h2>
                             </div>

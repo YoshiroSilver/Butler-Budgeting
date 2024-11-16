@@ -2,28 +2,26 @@ import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useIndexedDB } from "react-indexed-db-hook";
 
-import { IoAddCircleOutline } from "react-icons/io5";
 import Card from "../components/card/Card";
 import EditCard from "../components/card/EditCard";
 
-function Income() {
-    const [incomes, setIncomes] = useState([]);
-    const [updatedIncome, setUpdatedIncome] = useState(false);
-    const defaultItem = { Name: "", Amount: "", Date: "", Interval: "" };
-    const editItem = useRef(defaultItem);
-    const db = useIndexedDB("income");
+function CategoryPage({ dbName, defaultItem }) {
+    const [data, setData] = useState([]);
+    const [updatedData, setUpdatedData] = useState(false);
+    const TITLE = dbName.charAt(0).toUpperCase() + dbName.slice(1);
+    const db = useIndexedDB(dbName);
 
     useEffect(() => {
         db.getAll().then(
             (results) => {
-                setIncomes(results);
+                setData(results);
             },
             (error) => {
                 console.log(error);
             },
         );
-        setUpdatedIncome(false);
-    }, [updatedIncome]);
+        setUpdatedData(false);
+    }, [updatedData]);
     const onDeleteClick = (id) => {
         // delete item, them get new list of incomes
         db.deleteRecord(id).then(
@@ -34,14 +32,7 @@ function Income() {
                 console.log(error);
             },
         );
-        db.getAll().then(
-            (results) => {
-                setIncomes(results);
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
+        setUpdatedData(true);
     };
 
     const handleUpdate = (item) => {
@@ -50,6 +41,7 @@ function Income() {
             console.log(`Id: ${item.id}`);
             db.update(item).then(
                 (result) => {
+                    console.log(`Updated item with id: ${item.id}`);
                     console.log(result);
                 },
                 (error) => {
@@ -60,6 +52,7 @@ function Income() {
             //create new item.
             db.add(item).then(
                 (result) => {
+                    console.log("Added new Item");
                     console.log(result);
                 },
                 (error) => {
@@ -67,7 +60,7 @@ function Income() {
                 },
             );
         }
-        setUpdatedIncome(true);
+        setUpdatedData(true);
     };
 
     return (
@@ -80,7 +73,7 @@ function Income() {
                     Back
                 </Link>
                 <h1 className="text-extrabold text-center text-4xl text-copy dark:text-dark-copy">
-                    Income
+                    {TITLE}
                 </h1>
                 <div className="flex justify-center">
                     <EditCard
@@ -91,8 +84,8 @@ function Income() {
                 </div>
             </div>
             <div className="flex flex-wrap justify-center">
-                {incomes && incomes.length > 0 ? (
-                    incomes.map((item) => (
+                {data && data.length > 0 ? (
+                    data.map((item) => (
                         <Card
                             key={item.id}
                             item={item}
@@ -110,4 +103,4 @@ function Income() {
     );
 }
 
-export default Income;
+export default CategoryPage;
