@@ -176,7 +176,7 @@ function EditCard({ item, title, handleUpdate }) {
                                             className="inline-flex min-h-[2.25rem] items-center justify-center gap-1 rounded-lg border border-transparent bg-primary px-4 py-1 text-sm font-medium text-primary-content shadow outline-none transition-colors hover:bg-primary-dark focus:bg-[#11071F] focus:ring-2 focus:ring-inset focus:ring-white focus:ring-offset-2 focus:ring-offset-[#11071F] dark:shadow-gray-400 dark:focus:ring-offset-0"
                                         >
                                             <span className="flex items-center gap-1">
-                                                <span className="">Send</span>
+                                                <span className="">Save</span>
                                             </span>
                                         </button>
                                     </div>

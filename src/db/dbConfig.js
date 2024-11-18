@@ -1,3 +1,4 @@
+import { options } from "prettier-plugin-tailwindcss";
 
 export const DBConfig = {
     name: "Butler-Budget",
@@ -43,6 +44,18 @@ export const DBConfig = {
                 { name: "Interval", keyPath: "Interval", options: {unique: false}},
                 { name: "Date", keyPath: "Date", options: {unique: false}},
             ],
+        },
+        {
+            store: "currentMonth",
+            storeConfig: {keyPath: "id", autoIncrement: true},
+            storeSchema: [
+                {name: "Date", keyPath: "Date",options:{unique: true}},
+                {name: "DoW", keyPath: "DoW",options:{unique: false}},
+                {name: "Incomes", keyPath: "Incomes",options:{unique: false}},
+                {name: "Expenses", keyPath: "Expenses",options:{unique: false}},
+                {name: "Debts", keyPath: "Debts",options:{unique: false}},
+                {name: "Savings", keyPath: "Savings",options:{unique: false}},
+            ]
         }
     ]
 }

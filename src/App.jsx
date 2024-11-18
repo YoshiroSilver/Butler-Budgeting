@@ -4,9 +4,6 @@ import { DBConfig } from "./db/dbConfig";
 
 import Root from "./pages/Root";
 import Home from "./pages/home";
-import Expense from "./pages/Expense";
-import Debt from "./pages/Debt";
-import Savings from "./pages/Savings";
 import ErrorPage from "./pages/ErrorPage";
 import CategoryPage from "./pages/CategoryPage";
 
