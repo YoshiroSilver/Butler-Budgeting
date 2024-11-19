@@ -1,5 +1,3 @@
-import { options } from "prettier-plugin-tailwindcss";
-
 export const DBConfig = {
     name: "Butler-Budget",
     version: 1,
