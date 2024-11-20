@@ -6,6 +6,7 @@ import Root from "./pages/Root";
 import Home from "./pages/home";
 import ErrorPage from "./pages/ErrorPage";
 import CategoryPage from "./pages/CategoryPage";
+import PaymentSchedule from "./pages/PaymentSchedule";
 
 const router = createBrowserRouter([
     {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
                         }}
                     />
                 ),
+            },
+            {
+                path: "paymentSchedule",
+                element: <PaymentSchedule />,
             },
         ],
     },

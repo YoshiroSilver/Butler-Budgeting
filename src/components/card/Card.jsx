@@ -11,7 +11,9 @@ function Card({ item, handleDelete, handleUpdate }) {
             <div>
                 <div className="flex flex-wrap">
                     {Object.entries(item).map(([key, value]) =>
-                        key === "Name" || key === "id" ? (
+                        key === "Name" ||
+                        key === "id" ||
+                        key === "Occurances" ? (
                             <Fragment key={key} />
                         ) : (
                             <div

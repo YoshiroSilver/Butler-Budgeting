@@ -4,6 +4,7 @@ import { useIndexedDB } from "react-indexed-db-hook";
 
 import Card from "../components/card/Card";
 import EditCard from "../components/card/EditCard";
+import { getMonthlyOccurances } from "../utils/utils";
 
 function CategoryPage({ dbName, defaultItem }) {
     const [data, setData] = useState([]);
@@ -36,12 +37,12 @@ function CategoryPage({ dbName, defaultItem }) {
     };
 
     const handleUpdate = (item) => {
-        if (item.hasOwnProperty("id")) {
+        const occurances = getMonthlyOccurances(item.Date, item.Interval);
+        const newItem = { ...item, Occurances: occurances };
+        if (newItem.hasOwnProperty("id")) {
             //update item based on id
-            console.log(`Id: ${item.id}`);
-            db.update(item).then(
+            db.update(newItem).then(
                 (result) => {
-                    console.log(`Updated item with id: ${item.id}`);
                     console.log(result);
                 },
                 (error) => {
@@ -50,7 +51,7 @@ function CategoryPage({ dbName, defaultItem }) {
             );
         } else {
             //create new item.
-            db.add(item).then(
+            db.add(newItem).then(
                 (result) => {
                     console.log("Added new Item");
                     console.log(result);

@@ -5,6 +5,7 @@ import { DateTime } from "luxon"
 // example date is ISO string format 'YYYY-MM-DD'
 export function getMonthlyOccurances(date,interval) {
     const intervalValue = interval === "Weekly" ? 7 : interval === "Bi-Weekly" ? 14 : 0
+
     console.log(`Interval Value: ${intervalValue}`)
     const startOfCurrentMonth = DateTime.now().startOf('month')
     const suppliedDate = DateTime.fromISO(date)
@@ -12,17 +13,15 @@ export function getMonthlyOccurances(date,interval) {
         return [`${startOfCurrentMonth.year}-${startOfCurrentMonth.month}-${suppliedDate.day}`,]
     }
     //if date is before current month
-    const diff = suppliedDate.month < startOfCurrentMonth.month ? (
-        startOfCurrentMonth.diff(suppliedDate,'days') % intervalValue
-        ) : (
-        suppliedDate.diff(startOfCurrentMonth,'days') % intervalValue)
+    const diff = suppliedDate.month < startOfCurrentMonth.month ? 
+        startOfCurrentMonth.diff(suppliedDate,'days').days % intervalValue : 
+        suppliedDate.diff(startOfCurrentMonth,'days').days % intervalValue
 
     console.log(`Diff: ${diff}`)
 
-    let firstOccurance = startOfCurrentMonth.plus({days: diff})
+    let index = startOfCurrentMonth.plus({days: diff}).day
 
-    let index = firstOccurance.day
-    console.log(index)
+    console.log(`Index: ${index}`)
     let occurances =[]
 
     while (index <= startOfCurrentMonth.endOf('month').day) {

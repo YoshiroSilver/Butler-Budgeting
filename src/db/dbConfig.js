@@ -1,6 +1,6 @@
 export const DBConfig = {
     name: "Butler-Budget",
-    version: 1,
+    version: 4,
     objectStoresMeta: [
         {
             store: "income",
@@ -10,6 +10,7 @@ export const DBConfig = {
                 { name: "Amount", keyPath: "Amount", options: { unique: false } },
                 { name: "Interval", keyPath: "Interval", options: {unique: false}},
                 { name: "Date", keyPath: "Date", options: {unique: false}},
+                { name: "Occurances", keyPath: "Occurances", options: {unique: false}},
             ],
         },
         {
@@ -20,6 +21,7 @@ export const DBConfig = {
                 { name: "Amount", keyPath: "Amount", options: { unique: false } },
                 { name: "Interval", keyPath: "Interval", options: {unique: false}},
                 { name: "Date", keyPath: "Date", options: {unique: false}},
+                { name: "Occurances", keyPath: "Occurances", options: {unique: false}},
             ],
         },
         {
@@ -30,7 +32,8 @@ export const DBConfig = {
                 { name: "Amount", keyPath: "Amount", options: { unique: false } },
                 { name: "Interval", keyPath: "Interval", options: {unique: false}},
                 { name: "Date", keyPath: "Date", options: {unique: false}},
-                { name: "Total", keyPath: "Date", options: {unique: false}},
+                { name: "Total", keyPath: "Total", options: {unique: false}},
+                { name: "Occurances", keyPath: "Occurances", options: {unique: false}},
             ],
         },
         {
@@ -41,18 +44,18 @@ export const DBConfig = {
                 { name: "Amount", keyPath: "Amount", options: { unique: false } },
                 { name: "Interval", keyPath: "Interval", options: {unique: false}},
                 { name: "Date", keyPath: "Date", options: {unique: false}},
+                { name: "Occurances", keyPath: "Occurances", options: {unique: false}},
             ],
         },
         {
-            store: "currentMonth",
-            storeConfig: {keyPath: "id", autoIncrement: true},
+            store: "calendar",
+            storeConfig: {keyPath: "isoDate"},
             storeSchema: [
-                {name: "Date", keyPath: "Date",options:{unique: true}},
-                {name: "DoW", keyPath: "DoW",options:{unique: false}},
-                {name: "Incomes", keyPath: "Incomes",options:{unique: false}},
-                {name: "Expenses", keyPath: "Expenses",options:{unique: false}},
-                {name: "Debts", keyPath: "Debts",options:{unique: false}},
-                {name: "Savings", keyPath: "Savings",options:{unique: false}},
+                {name: "Month", keyPath: "Month",options:{unique: true}},
+                {name: "Year", keyPath: "Year",options:{unique: true}},
+                {name: "Day", keyPath: "Day",options:{unique: true}},
+                {name: "Deposits", keyPath: "Deposits",options:{unique: false}},
+                {name: "Withdrawals", keyPath: "Withdrawals",options:{unique: false}},
             ]
         }
     ]
