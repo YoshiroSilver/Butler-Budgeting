@@ -95,7 +95,9 @@ function EditCard({ item, title, handleUpdate }) {
                                     >
                                         {Object.entries(item).map(
                                             ([key, value]) => {
-                                                return key === "id" ? (
+                                                return key === "id" ||
+                                                    key === "Category" ||
+                                                    key === "Occurances" ? (
                                                     <Fragment
                                                         key={`${key}_${value}`}
                                                     />

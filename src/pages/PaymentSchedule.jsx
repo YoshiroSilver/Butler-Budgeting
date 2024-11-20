@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useIndexedDB } from "react-indexed-db-hook";
 
 function PaymentSchedule() {
+    const [data, setData] = useState([]);
+    const [updatedData, setUpdatedData] = useState(false);
+    const db = useIndexedDB("calendar");
+
+    useEffect(() => {
+        db.getAll().then(
+            (results) => {
+                setData(results);
+            },
+            (error) => {
+                console.error(error);
+            },
+        );
+    }, [updatedData]);
+
     return (
         <>
             <div className="flex flex-col">

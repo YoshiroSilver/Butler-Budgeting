@@ -13,7 +13,8 @@ function Card({ item, handleDelete, handleUpdate }) {
                     {Object.entries(item).map(([key, value]) =>
                         key === "Name" ||
                         key === "id" ||
-                        key === "Occurances" ? (
+                        key === "Occurances" ||
+                        key === "Category" ? (
                             <Fragment key={key} />
                         ) : (
                             <div

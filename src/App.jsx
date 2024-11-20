@@ -28,6 +28,7 @@ const router = createBrowserRouter([
                             Amount: "",
                             Date: "",
                             Interval: "",
+                            Category: "deposit",
                         }}
                     />
                 ),
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
                             Amount: "",
                             Date: "",
                             Interval: "",
+                            Category: "withdrawal",
                         }}
                     />
                 ),
@@ -57,6 +59,7 @@ const router = createBrowserRouter([
                             Date: "",
                             Interval: "",
                             Total: "",
+                            Category: "withdrawal",
                         }}
                     />
                 ),
@@ -71,6 +74,7 @@ const router = createBrowserRouter([
                             Amount: "",
                             Date: "",
                             Interval: "",
+                            Category: "other",
                         }}
                     />
                 ),

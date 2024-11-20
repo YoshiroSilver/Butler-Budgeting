@@ -96,7 +96,7 @@ function CategoryPage({ dbName, defaultItem }) {
                     ))
                 ) : (
                     <span className="text-extrabold flex justify-center text-center text-4xl text-copy dark:text-dark-copy">
-                        No income supplied yet.
+                        {`No ${dbName} supplied yet.`}
                     </span>
                 )}
             </div>
