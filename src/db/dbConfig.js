@@ -1,6 +1,6 @@
 export const DBConfig = {
     name: "Butler-Budget",
-    version: 5,
+    version: 6,
     objectStoresMeta: [
         {
             store: "income",
@@ -60,7 +60,6 @@ export const DBConfig = {
                 { name: "Day", keyPath: "Day", options:{ unique: true} },
                 { name: "Deposits", keyPath: "Deposits", options:{ unique: false } },
                 { name: "Withdrawals", keyPath: "Withdrawals", options:{ unique: false } },
-                { name: "Category", keyPath: "Category", options: { unique: false} },
             ]
         }
     ]
