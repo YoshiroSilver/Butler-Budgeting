@@ -4,10 +4,10 @@ import { DateTime } from "luxon"
 // intervals - Weekly 7, Bi-Weekly 14, all else just returns provided date in current month/year
 // example date is ISO string format 'YYYY-MM-DD'
 export function getMonthlyOccurances(date,interval) {
-    console.log(`Interval string: ${interval}`)
+    //console.log(`Interval string: ${interval}`)
     const intervalValue = interval === "Weekly" ? 7 : interval === "Bi-Weekly" ? 14 : 0
 
-    console.log(`Interval Value: ${intervalValue}`)
+    //console.log(`Interval Value: ${intervalValue}`)
     const startOfCurrentMonth = DateTime.now().startOf('month')
     const suppliedDate = DateTime.fromISO(date)
     if(intervalValue === 0){
@@ -18,15 +18,16 @@ export function getMonthlyOccurances(date,interval) {
         startOfCurrentMonth.diff(suppliedDate,'days').days % intervalValue : 
         suppliedDate.diff(startOfCurrentMonth,'days').days % intervalValue
 
-    console.log(`Diff: ${diff}`)
+    //console.log(`Diff: ${diff}`)
 
     let index = startOfCurrentMonth.plus({days: diff}).day
 
-    console.log(`Index: ${index}`)
+    //console.log(`Index: ${index}`)
     let occurances =[]
 
     while (index <= startOfCurrentMonth.endOf('month').day) {
-        occurances.push(`${startOfCurrentMonth.year}-${startOfCurrentMonth.month}-${index}`)
+        let dt = DateTime.local(startOfCurrentMonth.year,startOfCurrentMonth.month,index).toISODate()
+        occurances.push(dt)
         index += intervalValue
     }
 

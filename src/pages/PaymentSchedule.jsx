@@ -3,27 +3,41 @@ import { Link } from "react-router-dom";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db/db";
 import { DateTime } from "luxon";
+import Calendar from "../components/calendar/calendar";
 
 function PaymentSchedule() {
-    const data = useLiveQuery(async () => {
-        const data = db.calendar
-            .toArray((result) => {
-                return result;
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-        checkCalendarData(data);
-        return data;
-    });
+    const [date, setDate] = useState(DateTime.now().startOf("month"));
+    const [activeDay, setActiveDay] = useState(DateTime.now().day);
 
-    console.log(`Calendar Data: ${JSON.stringify(data)}`);
-    function checkCalendarData(data) {
-        const today = DateTime.now().toISODate();
-        if (data.length > 1 || !data.hasOwnProperty(today)) {
-            console.log("Calender needs to update for current month.");
-        }
+    const data = useLiveQuery(() =>
+        db.calendar.where({ Month: date.month, Year: date.year }).toArray(),
+    );
+
+    const day = useLiveQuery(
+        () =>
+            db.calendar.get({
+                Month: date.month,
+                Year: date.year,
+                Day: activeDay,
+            }),
+        [activeDay],
+    );
+
+    const handleSelection = (day) => {
+        setActiveDay(day);
+    };
+
+    const spaceOffsets = [];
+
+    for (let i = 0; i < date.weekday; i++) {
+        spaceOffsets.push(
+            <div
+                key={i}
+                className="grid justify-center bg-border text-copy dark:bg-dark-border dark:text-dark-copy"
+            ></div>,
+        );
     }
+
     return (
         <>
             <div className="flex flex-col">
@@ -34,8 +48,54 @@ function PaymentSchedule() {
                     Back
                 </Link>
             </div>
-            <div className="text-copy dark:text-dark-copy">
-                Calendar goes here
+            <div className="flex justify-center text-3xl font-extrabold text-primary dark:text-primary-light">
+                <h1>
+                    {date.monthLong} {date.year}
+                </h1>
+            </div>
+            <Calendar
+                currentMonth={data}
+                offSet={spaceOffsets}
+                handleSelection={handleSelection}
+            />
+            <div>
+                <h1 className="text-7xl dark:text-dark-copy">{day?.Day}</h1>
+                {day?.Deposits?.map((deposit) => (
+                    <div key={deposit.id}>
+                        <h1 className="text-5xl dark:text-dark-copy">
+                            Deposits:
+                        </h1>
+                        <div className="m-2 flex flex-row border-border dark:border-dark-border dark:text-dark-copy">
+                            <p>
+                                {deposit.Name}:{" "}
+                                {`$${Number(deposit.Amount).toFixed(2)}`}
+                            </p>
+                            <input
+                                type="checkbox"
+                                defaultValue={deposit.Completed}
+                                className="mx-2"
+                            />
+                        </div>
+                    </div>
+                ))}
+                {day?.Withdrawals?.map((withdrawals) => (
+                    <div key={withdrawals.id}>
+                        <h1 className="text-5xl dark:text-dark-copy">
+                            Withdrawals:
+                        </h1>
+                        <div className="m-1 flex flex-row">
+                            <p>
+                                {withdrawals.Name}:{" "}
+                                {`$${Number(withdrawals.Amount).toFixed(2)}`}
+                            </p>
+                            <input
+                                type="checkbox"
+                                defaultValue={withdrawals.Completed}
+                                className="mx-2"
+                            />
+                        </div>
+                    </div>
+                ))}
             </div>
         </>
     );

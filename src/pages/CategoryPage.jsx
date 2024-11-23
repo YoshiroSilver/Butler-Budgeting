@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Link } from "react-router-dom";
 //import { useIndexedDB } from "react-indexed-db-hook";
-import { db } from "../db/db";
+import {
+    categoryItemUpdated,
+    db,
+    removeOccurancesFromCalendar,
+} from "../db/db";
 import { useLiveQuery } from "dexie-react-hooks";
 
 import Card from "../components/card/Card";
@@ -23,15 +27,16 @@ function CategoryPage({ dbName, defaultItem }) {
     });
     const TITLE = dbName.charAt(0).toUpperCase() + dbName.slice(1);
 
-    const onDeleteClick = (id) => {
-        console.log("need to implement delete", id);
+    const onDeleteClick = async (id) => {
+        const item = await db.budgetItems.get(id);
+        removeOccurancesFromCalendar(item.id, item.Category, item.Occurances);
+        await db.budgetItems.delete(id);
     };
 
-    const handleUpdate = (item) => {
+    const handleUpdate = async (item) => {
         const occurances = getMonthlyOccurances(item.Date, item.Interval);
         const newItem = { ...item, Occurances: occurances, Type: dbName };
-        console.log(newItem);
-        console.log("need to implement update", item);
+        await categoryItemUpdated(newItem);
     };
 
     return (

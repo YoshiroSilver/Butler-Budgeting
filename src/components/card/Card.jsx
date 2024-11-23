@@ -5,11 +5,24 @@ import EditCard from "./EditCard";
 function Card({ item, handleDelete, handleUpdate }) {
     return (
         <div className="m-2 h-fit rounded-xl bg-foreground dark:bg-dark-foreground">
-            <h1 className="m-2 text-xl font-extrabold text-copy dark:text-dark-copy">
-                {item.Name}
-            </h1>
+            <div className="flex flex-row justify-between">
+                <h1 className="m-2 text-xl font-extrabold text-copy dark:text-dark-copy">
+                    {item.Name}
+                </h1>
+                <div className="flex justify-end">
+                    <EditCard
+                        item={item}
+                        title="Edit"
+                        handleUpdate={handleUpdate}
+                    />
+                    <IoTrashSharp
+                        className="mx-2 my-1 size-6 text-error"
+                        onClick={() => handleDelete(item.id)}
+                    />
+                </div>
+            </div>
             <div>
-                <div className="flex flex-wrap">
+                <div className="flex flex-wrap justify-center">
                     {Object.entries(item).map(([key, value]) =>
                         key === "Name" ||
                         key === "id" ||
@@ -33,17 +46,6 @@ function Card({ item, handleDelete, handleUpdate }) {
                             </div>
                         ),
                     )}
-                    <div className="flex flex-col justify-start">
-                        <EditCard
-                            item={item}
-                            title="Edit"
-                            handleUpdate={handleUpdate}
-                        />
-                        <IoTrashSharp
-                            className="mx-2 my-1 size-6 text-error"
-                            onClick={() => handleDelete(item.id)}
-                        />
-                    </div>
                 </div>
             </div>
         </div>
