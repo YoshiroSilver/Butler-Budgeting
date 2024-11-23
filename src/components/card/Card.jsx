@@ -14,7 +14,8 @@ function Card({ item, handleDelete, handleUpdate }) {
                         key === "Name" ||
                         key === "id" ||
                         key === "Occurances" ||
-                        key === "Category" ? (
+                        key === "Category" ||
+                        key === "Type" ? (
                             <Fragment key={key} />
                         ) : (
                             <div

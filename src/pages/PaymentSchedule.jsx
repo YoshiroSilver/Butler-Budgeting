@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useIndexedDB } from "react-indexed-db-hook";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "../db/db";
+import { DateTime } from "luxon";
 
 function PaymentSchedule() {
-    const [data, setData] = useState([]);
-    const [updatedData, setUpdatedData] = useState(false);
-    const db = useIndexedDB("calendar");
+    const data = useLiveQuery(async () => {
+        const data = db.calendar
+            .toArray((result) => {
+                return result;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        checkCalendarData(data);
+        return data;
+    });
 
-    useEffect(() => {
-        db.getAll().then(
-            (results) => {
-                setData(results);
-            },
-            (error) => {
-                console.error(error);
-            },
-        );
-    }, [updatedData]);
-
+    console.log(`Calendar Data: ${JSON.stringify(data)}`);
+    function checkCalendarData(data) {
+        const today = DateTime.now().toISODate();
+        if (data.length > 1 || !data.hasOwnProperty(today)) {
+            console.log("Calender needs to update for current month.");
+        }
+    }
     return (
         <>
             <div className="flex flex-col">

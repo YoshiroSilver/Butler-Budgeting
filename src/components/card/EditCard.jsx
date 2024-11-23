@@ -97,7 +97,8 @@ function EditCard({ item, title, handleUpdate }) {
                                             ([key, value]) => {
                                                 return key === "id" ||
                                                     key === "Category" ||
-                                                    key === "Occurances" ? (
+                                                    key === "Occurances" ||
+                                                    key === "Type" ? (
                                                     <Fragment
                                                         key={`${key}_${value}`}
                                                     />

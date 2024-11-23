@@ -1,67 +1,37 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import { Link } from "react-router-dom";
-import { useIndexedDB } from "react-indexed-db-hook";
+//import { useIndexedDB } from "react-indexed-db-hook";
+import { db } from "../db/db";
+import { useLiveQuery } from "dexie-react-hooks";
 
 import Card from "../components/card/Card";
 import EditCard from "../components/card/EditCard";
 import { getMonthlyOccurances } from "../utils/utils";
 
 function CategoryPage({ dbName, defaultItem }) {
-    const [data, setData] = useState([]);
-    const [updatedData, setUpdatedData] = useState(false);
+    const data = useLiveQuery(async () => {
+        const data = db.budgetItems
+            .where("Type")
+            .equals(dbName)
+            .toArray((result) => {
+                return result;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        return data;
+    });
     const TITLE = dbName.charAt(0).toUpperCase() + dbName.slice(1);
-    const db = useIndexedDB(dbName);
 
-    useEffect(() => {
-        db.getAll().then(
-            (results) => {
-                setData(results);
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
-        setUpdatedData(false);
-    }, [updatedData]);
     const onDeleteClick = (id) => {
-        // delete item, them get new list of incomes
-        db.deleteRecord(id).then(
-            (result) => {
-                console.log(result);
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
-        setUpdatedData(true);
+        console.log("need to implement delete", id);
     };
 
     const handleUpdate = (item) => {
         const occurances = getMonthlyOccurances(item.Date, item.Interval);
-        const newItem = { ...item, Occurances: occurances };
-        if (newItem.hasOwnProperty("id")) {
-            //update item based on id
-            db.update(newItem).then(
-                (result) => {
-                    console.log(result);
-                },
-                (error) => {
-                    console.error(error);
-                },
-            );
-        } else {
-            //create new item.
-            db.add(newItem).then(
-                (result) => {
-                    console.log("Added new Item");
-                    console.log(result);
-                },
-                (error) => {
-                    console.error(error);
-                },
-            );
-        }
-        setUpdatedData(true);
+        const newItem = { ...item, Occurances: occurances, Type: dbName };
+        console.log(newItem);
+        console.log("need to implement update", item);
     };
 
     return (
