@@ -1,6 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { initDB } from "react-indexed-db-hook";
-import { DBConfig } from "./db/dbConfig";
 
 import Root from "./pages/Root";
 import Home from "./pages/home";
@@ -86,8 +84,6 @@ const router = createBrowserRouter([
         ],
     },
 ]);
-
-initDB(DBConfig);
 
 function App() {
     return (
