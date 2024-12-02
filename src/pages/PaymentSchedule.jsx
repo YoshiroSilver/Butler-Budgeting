@@ -95,7 +95,7 @@ function PaymentSchedule() {
                 </h1>
                 {day?.Withdrawals?.map((withdrawals) => (
                     <div key={withdrawals.id}>
-                        <div className="m-1 flex flex-row">
+                        <div className="m-1 flex flex-row text-copy dark:text-dark-copy">
                             <p>
                                 {withdrawals.Name}:{" "}
                                 {`$${Number(withdrawals.Amount).toFixed(2)}`}
