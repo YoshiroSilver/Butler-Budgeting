@@ -45,7 +45,7 @@ function PaymentSchedule() {
                     to="/"
                     className="text-extrabold mx-4 text-2xl text-copy dark:text-dark-copy"
                 >
-                    Back
+                    Home
                 </Link>
             </div>
             <div className="flex justify-center text-3xl font-extrabold text-primary dark:text-primary-light">
@@ -60,11 +60,17 @@ function PaymentSchedule() {
             />
             <div>
                 <h1 className="text-7xl dark:text-dark-copy">{day?.Day}</h1>
+                <h1
+                    className={
+                        day?.Deposits?.length > 0
+                            ? "text-5xl dark:text-dark-copy"
+                            : "hidden"
+                    }
+                >
+                    Deposits:
+                </h1>
                 {day?.Deposits?.map((deposit) => (
                     <div key={deposit.id}>
-                        <h1 className="text-5xl dark:text-dark-copy">
-                            Deposits:
-                        </h1>
                         <div className="m-2 flex flex-row border-border dark:border-dark-border dark:text-dark-copy">
                             <p>
                                 {deposit.Name}:{" "}
@@ -78,11 +84,17 @@ function PaymentSchedule() {
                         </div>
                     </div>
                 ))}
+                <h1
+                    className={
+                        day?.Withdrawals?.length > 0
+                            ? "text-5xl dark:text-dark-copy"
+                            : "hidden"
+                    }
+                >
+                    Withdrawals:
+                </h1>
                 {day?.Withdrawals?.map((withdrawals) => (
                     <div key={withdrawals.id}>
-                        <h1 className="text-5xl dark:text-dark-copy">
-                            Withdrawals:
-                        </h1>
                         <div className="m-1 flex flex-row">
                             <p>
                                 {withdrawals.Name}:{" "}

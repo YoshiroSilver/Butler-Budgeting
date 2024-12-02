@@ -46,7 +46,7 @@ function CategoryPage({ dbName, defaultItem }) {
                     to="/"
                     className="text-extrabold mx-4 text-2xl text-copy dark:text-dark-copy"
                 >
-                    Back
+                    Home
                 </Link>
                 <h1 className="text-extrabold text-center text-4xl text-copy dark:text-dark-copy">
                     {TITLE}

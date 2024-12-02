@@ -82,7 +82,7 @@ export function removeOccurancesFromCalendar(id,category,occurances){
         let day = await db.calendar.get({Month:date.month,Year:date.year,Day:date.day})
         let items
         if(day[category]){
-            items = day[category].filter((item)=>{item.id != id})
+            items = day[category].filter((item)=>{return item.id != id})
             await db.calendar.update(day.id,{[category]:items})
         }
     })
@@ -92,15 +92,12 @@ export function addOccurancesToCalendar(item){
     
     item.Occurances.forEach(async(occurance)=>{
         let date = DateTime.fromISO(occurance)
-        console.log(occurance)
-        console.log(`Date: ${date.year}-${date.month}-${date.day},Type: ${item.Type},Interval: ${item.Interval}`)
         let day = await db.calendar.get({Month:date.month,Year:date.year,Day:date.day})
         let items
         let newItems
         console.log(day[item.Category])
         if(day[item.Category]){
-            console.log("adding item to existing category")
-            items = day[item.Category].filter((x)=>{x.id != item.id})
+            items = day[item.Category].filter((x)=>{return x.id != item.id})
             newItems = [...items,{id:item.id,Name:item.Name,Amount:item.Amount,Completed:false}]
         } else {
             console.log("adding first item to category")
